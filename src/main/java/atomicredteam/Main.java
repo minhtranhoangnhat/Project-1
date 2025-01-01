@@ -3,18 +3,21 @@ package atomicredteam;
 import java.io.IOException;
 import java.util.*;
 
-import atomicredteam.api.GitHubClient;
-import atomicredteam.api.MitreCoverageAnalyzer;
+import atomicredteam.api.manhMitreApiFetcher;
+import atomicredteam.api.AtomicApiFetcher;
+import atomicredteam.api.CollectData;
 import atomicredteam.api.ExcelExporter;
-import atomicredteam.model.Technique;
+import atomicredteam.api.CoverageCalculator;
+import atomicredteam.model.manhAtomicTest;
+import atomicredteam.model.manhMitreTechnique;
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        GitHubClient gitHubClient = new GitHubClient();
-        MitreCoverageAnalyzer analyzer = new MitreCoverageAnalyzer();
-        List<Technique> techniques = new ArrayList<>();
+        manhAtomicTest atomicTest = new manhAtomicTest();
+        List<manhMitreTechnique> mitreTechniques = new ArrayList<>();
+        List<manhAtomicTest> intergratedData = new ArrayList<>();
 
         while (true) {
             System.out.println("\n\033[1;34m===== Atomic Red Team Data Fetcher =====\033[0m");
@@ -31,30 +34,34 @@ public class Main {
                 case 1:
                     System.out.println("\033[1;33mDang thu thap du lieu...\033[0m");
                     try {
-                        techniques = gitHubClient.fetchTechniques();
-                        System.out.println("\033[1;32mThu thap du lieu thanh cong! So luong ky thuat: " + techniques.size() + "\033[0m");
+                        mitreTechniques = manhMitreApiFetcher.fetchMitreTechniques();
+                        atomicTest = AtomicApiFetcher.fetchAtomicTest();
+                        intergratedData = CollectData.integrateMitreAndAtomic(mitreTechniques, Collections.singletonList(atomicTest));
+                        System.out.println("\033[1;32mThu thap du lieu thanh cong! So luong ky thuat: " + intergratedData.size() + "\033[0m");
                     } catch (IOException e) {
                         System.err.println("\033[1;31mLoi khi thu thap du lieu: " + e.getMessage() + "\033[0m");
+                    } catch (Exception e) {
+                        System.err.println("\033[1;31mLoi khac: " + e.getMessage() + "\033[0m");
                     }
                     break;
                 case 2:
-                    if (techniques.isEmpty()) {
+                    if (intergratedData.isEmpty()) {
                         System.out.println("\033[1;31mDu lieu trong! Vui long thu thap du lieu truoc.\033[0m");
                     } else {
                         System.out.print("Nhap ten file Excel (vi du: AtomicData.xlsx): ");
                         String fileName = scanner.nextLine();
                         try {
-                            ExcelExporter.exportToExcel(techniques, fileName);
+                            ExcelExporter.exportToExcel(intergratedData, fileName);
                         } catch (IOException e) {
                             System.err.println("\033[1;31mLoi khi xuat du lieu: " + e.getMessage() + "\033[0m");
                         }
                     }
                     break;
                 case 3:
-                    if (techniques.isEmpty()) {
+                    if (intergratedData.isEmpty()) {
                         System.out.println("\033[1;31mDu lieu trong! Vui long thu thap du lieu truoc.\033[0m");
                     } else {
-                        analyzer.analyzeCoverage(techniques);
+                        CoverageCalculator.calculateCoveragePercentage(mitreTechniques, intergratedData);
                     }
                     break;
                 case 4:
