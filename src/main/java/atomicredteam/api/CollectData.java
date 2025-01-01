@@ -1,19 +1,19 @@
 package atomicredteam.api;
 
 
-import atomicredteam.model.manhAtomicTest;
-import atomicredteam.model.manhMitreTechnique;
+import atomicredteam.model.AtomicTest;
+import atomicredteam.model.MitreTechnique;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CollectData {
-    public static List<manhAtomicTest> integrateMitreAndAtomic(List<manhMitreTechnique> mitreTechniques, List<manhAtomicTest> atomicTests) {
-        List<manhAtomicTest> integratedTests = new ArrayList<>();
+    public static List<AtomicTest> integrateMitreAndAtomic(List<MitreTechnique> mitreTechniques, List<AtomicTest> atomicTests) {
+        List<AtomicTest> integratedTests = new ArrayList<>();
 
-        for (manhMitreTechnique technique : mitreTechniques) {
-            for (manhAtomicTest atomicTest : atomicTests) {
+        for (MitreTechnique technique : mitreTechniques) {
+            for (AtomicTest atomicTest : atomicTests) {
                 if (technique.getId().equals(atomicTest.getTechniqueId())) {
 
                     atomicTest.setDescription(technique.getDescription());

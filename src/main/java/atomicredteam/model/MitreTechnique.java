@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class manhMitreTechnique {
+public class MitreTechnique {
     private String techniqueId;
     private String name;
     private String description;

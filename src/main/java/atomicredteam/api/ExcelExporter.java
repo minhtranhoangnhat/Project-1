@@ -1,6 +1,6 @@
 package atomicredteam.api;
 
-import atomicredteam.model.manhAtomicTest;
+import atomicredteam.model.AtomicTest;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class ExcelExporter {
     private static final String EXPORT_FOLDER = "Exported files";
 
-    public static void exportToExcel(List<manhAtomicTest> atomicTests, String fileName) throws IOException {
+    public static void exportToExcel(List<AtomicTest> atomicTests, String fileName) throws IOException {
         // Tạo thư mục "Exported files" nếu chưa tồn tại
         createExportFolder();
 
@@ -34,7 +34,7 @@ public class ExcelExporter {
 
         // Ghi dữ liệu vào các hàng
         int rowNum = 1;
-        for (manhAtomicTest test : atomicTests) {
+        for (AtomicTest test : atomicTests) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(test.getTechniqueId());
             row.createCell(1).setCellValue(test.getName());

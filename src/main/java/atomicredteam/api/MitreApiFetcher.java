@@ -1,6 +1,6 @@
 package atomicredteam.api;
 
-import atomicredteam.model.manhMitreTechnique;
+import atomicredteam.model.MitreTechnique;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.InputStream;
@@ -9,10 +9,10 @@ import java.net.URL;
 import java.util.List;
 import java.io.IOException;
 
-public class manhMitreApiFetcher {
+public class MitreApiFetcher {
     private static final String MITRE_API_URL = "https://raw.githubusercontent.com/mitre/cti/ATT%26CK-v6.0/enterprise-attack/enterprise-attack.json";
 
-    public static List<manhMitreTechnique> fetchMitreTechniques() throws Exception {
+    public static List<MitreTechnique> fetchMitreTechniques() throws Exception {
         URL url = new URL(MITRE_API_URL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -33,7 +33,7 @@ public class manhMitreApiFetcher {
             }
 
             return objectMapper.convertValue(objectsNode,
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, manhMitreTechnique.class));
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, MitreTechnique.class));
         }
     }
 }

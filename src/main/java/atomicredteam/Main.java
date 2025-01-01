@@ -3,21 +3,21 @@ package atomicredteam;
 import java.io.IOException;
 import java.util.*;
 
-import atomicredteam.api.manhMitreApiFetcher;
+import atomicredteam.api.MitreApiFetcher;
 import atomicredteam.api.AtomicApiFetcher;
 import atomicredteam.api.CollectData;
 import atomicredteam.api.ExcelExporter;
 import atomicredteam.api.CoverageCalculator;
-import atomicredteam.model.manhAtomicTest;
-import atomicredteam.model.manhMitreTechnique;
+import atomicredteam.model.AtomicTest;
+import atomicredteam.model.MitreTechnique;
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        manhAtomicTest atomicTest = new manhAtomicTest();
-        List<manhMitreTechnique> mitreTechniques = new ArrayList<>();
-        List<manhAtomicTest> intergratedData = new ArrayList<>();
+        AtomicTest atomicTest = new AtomicTest();
+        List<MitreTechnique> mitreTechniques = new ArrayList<>();
+        List<AtomicTest> intergratedData = new ArrayList<>();
 
         while (true) {
             System.out.println("\n\033[1;34m===== Atomic Red Team Data Fetcher =====\033[0m");
@@ -34,7 +34,7 @@ public class Main {
                 case 1:
                     System.out.println("\033[1;33mDang thu thap du lieu...\033[0m");
                     try {
-                        mitreTechniques = manhMitreApiFetcher.fetchMitreTechniques();
+                        mitreTechniques = MitreApiFetcher.fetchMitreTechniques();
                         atomicTest = AtomicApiFetcher.fetchAtomicTest();
                         intergratedData = CollectData.integrateMitreAndAtomic(mitreTechniques, Collections.singletonList(atomicTest));
                         System.out.println("\033[1;32mThu thap du lieu thanh cong! So luong ky thuat: " + intergratedData.size() + "\033[0m");

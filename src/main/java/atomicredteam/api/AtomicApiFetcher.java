@@ -7,12 +7,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import atomicredteam.model.manhAtomicTest;
+import atomicredteam.model.AtomicTest;
 
 public class AtomicApiFetcher {
     private static final String ATOMIC_API_URL = "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1003/T1003.yaml";
 
-    public static manhAtomicTest fetchAtomicTest() throws Exception {
+    public static AtomicTest fetchAtomicTest() throws Exception {
         URL url = new URL(ATOMIC_API_URL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -21,7 +21,7 @@ public class AtomicApiFetcher {
             Yaml yaml = new Yaml();
             Map<String, Object> data = yaml.load(inputStream);
 
-            manhAtomicTest test = new manhAtomicTest();
+            AtomicTest test = new AtomicTest();
             test.setTechniqueId((String) data.get("attack_technique"));
             test.setName((String) data.get("display_name"));
             test.setDescription((String) data.get("description"));

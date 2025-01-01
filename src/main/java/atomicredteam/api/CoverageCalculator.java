@@ -1,7 +1,7 @@
 package atomicredteam.api;
 
-import atomicredteam.model.manhAtomicTest;
-import atomicredteam.model.manhMitreTechnique;
+import atomicredteam.model.AtomicTest;
+import atomicredteam.model.MitreTechnique;
 
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class CoverageCalculator {
 
-    public static double calculateCoveragePercentage(List<manhMitreTechnique> mitreTechniques, List<manhAtomicTest> atomicTests) {
+    public static double calculateCoveragePercentage(List<MitreTechnique> mitreTechniques, List<AtomicTest> atomicTests) {
         if (mitreTechniques == null || mitreTechniques.isEmpty()) {
             throw new IllegalArgumentException("The MITRE techniques list is empty or null.");
         }
@@ -20,12 +20,12 @@ public class CoverageCalculator {
         }
 
         Set<String> mitreTechniqueIds = new HashSet<>();
-        for (manhMitreTechnique technique : mitreTechniques) {
+        for (MitreTechnique technique : mitreTechniques) {
             mitreTechniqueIds.add(technique.getId());
         }
 
         Set<String> coveredTechniqueIds = new HashSet<>();
-        for (manhAtomicTest test : atomicTests) {
+        for (AtomicTest test : atomicTests) {
             if (mitreTechniqueIds.contains(test.getTechniqueId())) {
                 coveredTechniqueIds.add(test.getTechniqueId());
             }

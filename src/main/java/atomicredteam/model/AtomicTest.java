@@ -2,7 +2,7 @@ package atomicredteam.model;
 
 import java.util.List;
 
-public class manhAtomicTest{
+public class AtomicTest{
     private String techniqueId;
     private String name;
     private String description;
