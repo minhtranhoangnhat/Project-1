@@ -33,19 +33,26 @@ public class MitreApiFetcher {
             if (objectsNode == null || !objectsNode.isArray()) {
                 throw new IOException("Invalid JSON format: 'objects' field is missing or not an array.");
             }
-
+            for(JsonNode node : objectsNode){
+                if(node.has("type") && node.get("type").asText().equals("attack-pattern")){
+                    MitreTechnique technique = new MitreTechnique();
+                    technique.setId(node.get("external_references").get(0).get("external_id").asText());
+                    technique.setName(node.get("name").asText());
+                    technique.setDescription(node.get("description").asText());
+                    technique.setType(node.get("type").asText());
+                    techniques.add(technique);
+                }
+            }
             // Lọc các đối tượng có trường 'external_id' bắt đầu bằng "T"
             for (JsonNode objectNode : objectsNode) {
                 JsonNode externalIdNode = objectNode.get("external_references");
                 if (externalIdNode != null && externalIdNode.isArray()) {
                     for (JsonNode refNode : externalIdNode) {
                         JsonNode idNode = refNode.get("external_id");
-                        if (idNode != null && idNode.asText().startsWith("T")) { // Kiểm tra external_id bắt đầu bằng "T"
+                        if (idNode != null && idNode.asText().startsWith("T")) {
                             MitreTechnique technique = new MitreTechnique();
                             technique.setId(idNode.asText()); 
                             techniques.add(technique);
-                            System.out.println("ID du lieu thu thap duoc tu Mitre Att&Ck: " + idNode.asText());
-                            System.out.println("-----------------------------------");
                         }
                     }
                 }
