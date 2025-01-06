@@ -1,6 +1,7 @@
 package atomicredteam;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import atomicredteam.api.MitreApiFetcher;
@@ -50,8 +51,11 @@ public class Main {
                     if (intergratedData.isEmpty()) {
                         System.out.println("\033[1;31mDu lieu trong! Vui long thu thap du lieu truoc.\033[0m");
                     } else {
-                        System.out.print("Nhap ten file Excel (vi du: AtomicData.xlsx): ");
-                        String fileName = scanner.nextLine();
+                        System.out.print("Nhap ten file Excel (vi du: AtomicData): ");
+                        String name = scanner.nextLine();
+                        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                        String fileName = name + "_" + timestamp + ".xlsx";
+
                         try {
                             ExcelExporter.exportToExcel(atomicTests, mitreTechniques, intergratedData, fileName);
                         } catch (IOException e) {
