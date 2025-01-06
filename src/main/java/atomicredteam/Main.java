@@ -55,7 +55,6 @@ public class Main {
                         String name = scanner.nextLine();
                         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                         String fileName = name + "_" + timestamp + ".xlsx";
-
                         try {
                             ExcelExporter.exportToExcel(atomicTests, mitreTechniques, intergratedData, fileName);
                         } catch (IOException e) {

@@ -35,13 +35,9 @@ public class AtomicApiFetcher {
         for (String folder : folders) {
             if (folder.equalsIgnoreCase("Indexes")) continue; 
 
-            String yamlFileUrl = BASE_URL + "/" + folder + "/" + folder + ".yaml"; 
-            System.out.println("Dang xu li file .yaml tu URL: " + yamlFileUrl);
+            String yamlFileUrl = BASE_URL + "/" + folder + "/" + folder + ".yaml";
             try {
-                AtomicTest test = fetchAtomicTestFromYaml(yamlFileUrl); 
-                System.out.println("ID ki thuat tan cong: " + test.getTechniqueId());
-                System.out.println("Ten ki thuat tan cong: " + test.getName());
-                System.out.println("-----------------------------------");
+                AtomicTest test = fetchAtomicTestFromYaml(yamlFileUrl);
                 if (test != null) {
                     atomicTests.add(test);
                 }
