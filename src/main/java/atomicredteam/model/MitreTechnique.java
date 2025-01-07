@@ -1,16 +1,10 @@
 package atomicredteam.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.List;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class MitreTechnique {
     private String techniqueId;
     private String name;
     private String description;
     private String type;
-    private List<String> x_mitre_tactic_type;
 
     public String getType() {
         return type;

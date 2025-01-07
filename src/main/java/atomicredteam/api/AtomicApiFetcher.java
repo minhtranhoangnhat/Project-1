@@ -4,6 +4,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.kohsuke.github.*;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,10 @@ public class AtomicApiFetcher {
         GitHub github = new GitHubBuilder().build();
         GHRepository repository = github.getRepository(REPO_NAME);
         List<String> folders = new ArrayList<>();
-        // Lấy danh sách thư mục atomics
         List<GHContent> entries = repository.getDirectoryContent(ATOMICS_PATH);
         for (GHContent entry : entries) {
             if (entry.isDirectory()) {
-                String techniqueUrl = entry.getHtmlUrl().toString();
+                String techniqueUrl = entry.getHtmlUrl();
                 String[] parts = techniqueUrl.split("/");
                 String result = parts[parts.length - 1];
                 folders.add(result);
@@ -33,8 +33,7 @@ public class AtomicApiFetcher {
         List<AtomicTest> atomicTests = new ArrayList<>();
 
         for (String folder : folders) {
-            if (folder.equalsIgnoreCase("Indexes")) continue; 
-
+            if (folder.equalsIgnoreCase("Indexes")) continue;
             String yamlFileUrl = BASE_URL + "/" + folder + "/" + folder + ".yaml";
             try {
                 AtomicTest test = fetchAtomicTestFromYaml(yamlFileUrl);
@@ -50,7 +49,7 @@ public class AtomicApiFetcher {
     }
 
     private static AtomicTest fetchAtomicTestFromYaml(String yamlUrl) throws Exception {
-        URL url = new URL(yamlUrl);
+        URL url = new URI(yamlUrl).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
 

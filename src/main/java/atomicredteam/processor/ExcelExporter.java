@@ -1,4 +1,4 @@
-package atomicredteam.api;
+package atomicredteam.processor;
 
 import atomicredteam.model.AtomicTest;
 import atomicredteam.model.MitreTechnique;

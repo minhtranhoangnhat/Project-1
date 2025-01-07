@@ -7,8 +7,8 @@ import java.util.*;
 
 import atomicredteam.api.MitreApiFetcher;
 import atomicredteam.api.AtomicApiFetcher;
-import atomicredteam.api.CollectData;
-import atomicredteam.api.ExcelExporter;
+import atomicredteam.processor.CollectData;
+import atomicredteam.processor.ExcelExporter;
 import atomicredteam.model.AtomicTest;
 import atomicredteam.model.MitreTechnique;
 
@@ -65,7 +65,7 @@ public class Main {
                         System.out.println("\033[1;31mDu lieu trong! Vui long thu thap du lieu truoc.\033[0m");
                     } else {
                         double coveragePercentage = (double) intergratedData.size() / mitreTechniques.size() * 100;
-                        System.out.println("ti le bao phu la: " + intergratedData.size() + "/" + mitreTechniques.size() +
+                        System.out.println("Ti le bao phu la: " + intergratedData.size() + "/" + mitreTechniques.size() +
                                 " ki thuat duoc bao phu (" + String.format("%.2f", coveragePercentage) + "%).");
                     }
                     break;
