@@ -1,8 +1,7 @@
 package atomicredteam;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import atomicredteam.api.MitreApiFetcher;
@@ -14,8 +13,8 @@ import atomicredteam.model.MitreTechnique;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         List<MitreTechnique> mitreTechniques = new ArrayList<>();
         List<AtomicTest> atomicTests = new ArrayList<>();
         List<AtomicTest> intergratedData = new ArrayList<>();
@@ -28,7 +27,8 @@ public class Main {
             System.out.println("4. Thoat chuong trinh");
             System.out.print("Lua chon cua ban: ");
 
-            int choice = Integer.parseInt(br.readLine());
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
 
             switch (choice) {
                 case 1:
@@ -51,8 +51,10 @@ public class Main {
                     if (intergratedData.isEmpty()) {
                         System.out.println("\033[1;31mDu lieu trong! Vui long thu thap du lieu truoc.\033[0m");
                     } else {
-                        System.out.print("Nhap ten file Excel (vi du: AtomicData.xlsx): ");
-                        String fileName = br.readLine();
+                        System.out.print("Nhap ten file Excel (vi du: AtomicData): ");
+                        String name = scanner.nextLine();
+                        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                        String fileName = name + "_" + timestamp + ".xlsx";
                         try {
                             ExcelExporter.exportToExcel(atomicTests, mitreTechniques, intergratedData, fileName);
                         } catch (IOException e) {
@@ -71,7 +73,7 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("\033[1;34mThoat chuong trinh!\033[0m");
-                    br.close();
+                    scanner.close();
                     return;
                 default:
                     System.out.println("\033[1;31mLua chon khong hop le. Vui long thu lai.\033[0m");
